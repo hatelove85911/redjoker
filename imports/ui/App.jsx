@@ -3,12 +3,17 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+
+
 injectTapEventPlugin();
  
 // import UI components
-import Player from './Player.jsx';
-import GameSetting from './GameSetting.jsx';
+// import Player from './Player.jsx';
+// import Games from './Games.jsx';
 
 // import api
 import {Players} from '../api/players/players.js'
@@ -54,25 +59,16 @@ class App extends Component {
   }
  
   render() {
+    var path = this.props.location.pathname
+
     return (
       <MuiThemeProvider>
-        <GameSetting></GameSetting>
+        <div id="app">
+          <ReactCSSTransitionGroup transitionName="pageSlider">
+            {React.cloneElement(this.props.children, { key: path })}
+          </ReactCSSTransitionGroup>
+        </div>
       </MuiThemeProvider>
-      // <div className="container">
-      //   <header>
-      //     <h1>Player List</h1>
-      //     <label htmlFor="search">search</label>
-      //     <input type="text" name="search" value={this.state.searchString} onChange={this.handleSearch.bind(this)}></input>
- 
-      //     <form className="new-player" onSubmit={this.handleSubmit.bind(this)} >
-      //       <input
-      //         type="text"
-      //         ref="textInput"
-      //         placeholder="Type to add new player"
-      //       />
-      //     </form>
-      //   </header>
-      // </div>
     );
   }
 }

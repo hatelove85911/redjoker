@@ -6,10 +6,7 @@ import ActionInfo from 'material-ui/svg-icons/action/info'
 import Paper from 'material-ui/Paper'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add'
-import IconButton from 'material-ui/IconButton'
-import NavigationBack from 'material-ui/svg-icons/navigation/arrow-back';
 import { hashHistory } from 'react-router'
-
 
 const style = {
     margin: 0,
@@ -25,24 +22,31 @@ const paperStyle = {
 }
 // Task component - represents a single player
 export default class GameSetting extends Component {
-  navBack(){
-    hashHistory.goBack()
+  createGame(event){
+    hashHistory.push('settingGame')
+    // event.preventDefault()
+    // alert('create game')
   }
   render() {
     return (
       <div>
         <AppBar
-            title="Game Setting"
-            iconElementLeft={<IconButton><NavigationBack /></IconButton>}
-            onLeftIconButtonTouchTap={this.navBack}
+            title="Games"
+            iconElementLeft={undefined}
             iconClassNameRight="muidocs-icon-navigation-expand-more"
           />
-      <Paper style={paperStyle}>
-        <div> this is game setting</div>
-      <FloatingActionButton secondary={true} style={style}>
-      <ContentAdd />
-    </FloatingActionButton>
-      </Paper>
+        <Paper style={paperStyle}>
+          <List>
+            <ListItem primaryText="game1" rightIcon={<ActionInfo />}/>
+            <ListItem primaryText="game2" rightIcon={<ActionInfo />}/>
+            <ListItem primaryText="game3" rightIcon={<ActionInfo />}/>
+            <ListItem primaryText="game4" rightIcon={<ActionInfo />}/>
+            <ListItem primaryText="game5" rightIcon={<ActionInfo />}/>
+          </List>
+          <FloatingActionButton secondary={true} style={style} onClick={this.createGame}>
+            <ContentAdd />
+          </FloatingActionButton>
+        </Paper>
       </div>
     )
   }
