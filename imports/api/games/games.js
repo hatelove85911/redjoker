@@ -11,32 +11,33 @@ const Games = new Mongo.Collection('games')
 const frameSchema = new SimpleSchema({
   seqNo: {type: Number},
   lord: {type: String},
-  result: {allowedValues: WinOrLose},
+  // result: {allowedValues: WinOrLose},
   baseFactor: {type: String},
-  additionFactors: [String],
-  extraFactors:[String]
+  additionFactors: {type: [String]},
+  extraFactors:{type: [String]}
 })
 
 const commonFactorSchema = new SimpleSchema({
-  id: {regEx: SimpleSchema.RegEx.Id},
+  id: {type: String, regEx: SimpleSchema.RegEx.Id},
   name: {type: String},
   win: {type: Number},
   lose: {type: Number}
 })
 
 const additionFactorSchema = new SimpleSchema([commonFactorSchema, {
-  type: {allowedValues: Factortypes}
+  // type: {allowedValues: Factortypes}
+  type: {type: String}
 }])
 
 Games.schema = new SimpleSchema({
   when: {type:Date },
-  frames: {type:[frameSchema]},
+  frames: {type:[frameSchema], optional: true},
   baseFactorSettings: {type:[commonFactorSchema]},
   additionFactorSettings: {type:[additionFactorSchema], optional: true },
   extraFactorSettings: {type:[commonFactorSchema], optional: true },
-  players: {type: [String]}
+  players: {type: [String], optional: true}
 })
 
 Games.attachSchema(Games.schema)
 
-export Games
+export {Games}

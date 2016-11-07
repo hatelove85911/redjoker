@@ -3,10 +3,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { createContainer } from 'meteor/react-meteor-data';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 
 injectTapEventPlugin();
@@ -64,9 +61,7 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div id="app">
-          <ReactCSSTransitionGroup transitionName="pageSlider">
-            {React.cloneElement(this.props.children, { key: path })}
-          </ReactCSSTransitionGroup>
+          {this.props.children}
         </div>
       </MuiThemeProvider>
     );

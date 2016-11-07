@@ -7,6 +7,11 @@ import Paper from 'material-ui/Paper'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import { hashHistory } from 'react-router'
+import { createContainer } from 'meteor/react-meteor-data';
+
+// api
+import {Games} from '../api/games/games.js'
+import '../api/games/methods.js'
 
 const style = {
     margin: 0,
@@ -21,11 +26,14 @@ const paperStyle = {
   height: '100%'
 }
 // Task component - represents a single player
-export default class GameSetting extends Component {
+class GamesPage extends Component {
   createGame(event){
     hashHistory.push('settingGame')
-    // event.preventDefault()
-    // alert('create game')
+  }
+  renderGames(){
+    return this.props.games.map(g=>{
+      return <ListItem key={g._id} primaryText={g.when} rightIcon={<ActionInfo />}></ListItem>
+    })
   }
   render() {
     return (
@@ -37,11 +45,7 @@ export default class GameSetting extends Component {
           />
         <Paper style={paperStyle}>
           <List>
-            <ListItem primaryText="game1" rightIcon={<ActionInfo />}/>
-            <ListItem primaryText="game2" rightIcon={<ActionInfo />}/>
-            <ListItem primaryText="game3" rightIcon={<ActionInfo />}/>
-            <ListItem primaryText="game4" rightIcon={<ActionInfo />}/>
-            <ListItem primaryText="game5" rightIcon={<ActionInfo />}/>
+            {this.renderGames()}
           </List>
           <FloatingActionButton secondary={true} style={style} onClick={this.createGame}>
             <ContentAdd />
@@ -51,3 +55,10 @@ export default class GameSetting extends Component {
     )
   }
 }
+// wrapper
+export default createContainer(()=>{
+  Meteor.subscribe('games.all')
+  return {
+    games: Games.find({}).fetch()
+  }
+}, GamesPage)
